@@ -109,3 +109,57 @@ Lazy Initialization이란 객체의 생성, 데이터의 계산, 또는 일부 �
 싱글톤 패턴에서도 Lazy Initialization 방식은 자주 사용된다. 싱글톤 인스턴스가 많은 리소스를 사용하거나 복잡한 초기화 과정이 필요하다면 프로그램 시작 시 모든 싱글톤 인스턴스가 초기화되는 것은 비효율적일 수 있다. 따라서 싱글톤 인스턴트는 처음으로 getInstance() 메서드가 호출되는 시점에서 생성되도록 할 수 있으며, 이렇게 하면 불필요한 리소르 소비를 최소화할 수 있다.
 
 그러나 Lazy Initialization 기법 역시 주의해서 사용해야 한다. 멀티 스레딩 환경에서 동기화 문제로 인해 예상치 못한 버그가 발생할 가능성이 있으므로 적절한 동기화 조치가 필요하다.
+
+# Abstract Factory Pattern
+
+서로 관련이 있는 객체들을 Factory class로 만들고, 이 Factory class를 조건에 따라 생성하도록 Factory를 만드는 패턴
+
+*예시
+
+->가구 가게 시뮬레이터를 만든다고 가정
+
+->관련 제품군은 chair /sofa /coffee table임
+
+->관련 종류는 art Deco/ victorian / Modern
+
+->같은 종류의 다른 물건과 일치하도록 물건을 만드는 방법이 필요하며, 손님은 짝이 맞지 않으면 화를 냄
+
+->프로그램에 새 제품 및 제품군 추가시 기존 코드를 변경하지 않는 것이 좋음
+
+->이럴 때 추상 팩토리 패턴을 사용
+
+제품군의 제품에 대한 인터페이스를 명시적 사용
+
+모든 제품에 대한 생성 방법 목록이 포함된 Abstract Factory를 선언
+
+AbstractFactory 인터페이스를 기반으로 별도의 Factory class 생성
+
+*구성
+
+->Abstract Product: 제품군을 구성하는 고유하지만 관련 제품군에 대한 인터페이스 선언
+
+-> Concrete Product: Abstract Product를 만드는 Method 제공
+
+->Abstract Factory interface : Abstract Product를 만드는 Method 제공
+
+-> Concrete Factory interface: Abstract Factory의 생성 Method 제공
+
+*구현
+
+->개별 제품 유형의 매트릭스 작성
+
+->모든 제품에 대해 Abstract product interface
+
+->모든 Abstract product에 대한 생성 방법을 사용하여 Abstract factory interface 선언
+
+->각 제품 모델에 대해 구체적인 Factory class 세트를 구현
+
+->Factory 초기화 코드 제작
+
+->Product 생성자에 대한 모든 call을 찾음
+
+*장점
+
+추상 팩토리는 “제품 가족”이라고 할 수 있는 일련의 관련 제품을 함께 생성하는 데 유용하며, 클라이언트 코드가 특정 구현에 의존하지 않도록 도와준다. 그 결과 클라이언트 코드는 추상화된 인터페이스만 알면 되므로 변경에 대해 더 유연하게 대응할 수 있다.
+
+그러나 추상 팩토리가 새로운 종류의 제품을 지원하기 어렵다는 단점도 있다. 새로운 종류의 제품을 추가하려면 모든 기존 추상 팩토리와 구체적인 팩토리 클래스에 새로운 생산 메소드를 추가해야 하기 때문이다.
